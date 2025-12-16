@@ -1,0 +1,29 @@
+<header data-bs-theme="dark">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Dating app</a>
+
+
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <li class="nav-item">
+                    <a class="nav-link">Matches</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link">Lists</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link">Messages</a>
+                </li>
+
+            </ul>
+            <form class="d-flex" #loginForm="ngForm" (ngSubmit)="login()">
+                <input class="form-control me-2" [(ngModel)]="creds.UserName" name="UserName"  placeholder="UserName">
+                <input class="form-control me-2" [(ngModel)]="creds.PassWord" name="PassWord"  placeholder="PassWord" type="password">
+
+                <button class="btn btn-outline-success" type="submit">Loging</button>
+            </form>
+
+        </div>
+    </nav>
+</header>
