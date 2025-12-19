@@ -1,0 +1,15 @@
+<h4>Internal Server Error</h4>
+@if(error){
+<h5 class="text-danger">Error: {{error.message}}</h5>
+<p class="font-weight-bold">Note: If you are seeing this error, it means that the server encountered an unexpected
+    condition that prevented it from fulfilling the request.</p>
+<p>What went wrong?</p>
+<ol>
+    <li>The server may be experiencing technical difficulties.</li>
+    <li>There could be a bug in the server-side code.</li>
+    <li>Database connection issues might be causing the error.</li>
+</ol>
+<code class="mt-5" style="background-color: whitesmoke;">
+{{error.details}}
+</code>
+}
