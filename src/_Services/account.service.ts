@@ -57,6 +57,7 @@ export class AccountService {
     localStorage.removeItem('user');
     // Reset currentUser signal
     this.currentUser.set(null);
+    
   }
 
   public loadCurrentUser(): void {

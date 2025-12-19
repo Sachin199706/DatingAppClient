@@ -1,26 +1,28 @@
 <header data-bs-theme="dark">
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
         <div class="container">
-            <a class="navbar-brand" href="#">Dating app</a>
+            <a class="navbar-brand" routerLink="/" routerLinkActive="active">Dating app</a>
 
 
-            <ul class="navbar-nav me-auto mb-2 mb-md-0" *ngIf="accountService.currentUser()">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0" *ngIf="_accountService.currentUser()">
                 <li class="nav-item">
-                    <a class="nav-link">Matches</a>
+                    <a class="nav-link" routerLink="/members" routerLinkActive="active">Matches</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link">Lists</a>
+                    <a class="nav-link" routerLink="/lists" routerLinkActive="active">Lists</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link">Messages</a>
+                    <a class="nav-link" routerLink="/message" routerLinkActive="active">Messages</a>
                 </li>
 
             </ul>
 
-           @if(accountService.currentUser()){
+           @if(_accountService.currentUser()){
             <div class="dropdown" dropdown>
-                <a class="dropdown-toggle text-light text-decoration-none" dropdownToggle>Welcome User</a>
+                <a class="dropdown-toggle text-light text-decoration-none" dropdownToggle>
+                    Welcome {{_accountService.currentUser()?.username | titlecase}}
+                </a>
                 <div class="dropdown-menu" *dropdownMenu>
                     <a class="dropdown-item">Edit Profile</a>
                     <div class="dropdown-divider"></div>
@@ -28,12 +30,12 @@
                 </div>
             </div>
            }
-            @if(!accountService.currentUser()){
+            @if(!_accountService.currentUser()){
             <form class="d-flex" #loginForm="ngForm" (ngSubmit)="login()">
                 <input class="form-control me-2" [(ngModel)]="creds.UserName" name="UserName"  placeholder="UserName">
                 <input class="form-control me-2" [(ngModel)]="creds.PassWord" name="PassWord"  placeholder="PassWord" type="password">
 
-                <button class="btn btn-outline-success" type="submit">Loging</button>
+                <button class="btn btn-success" type="submit">Loging</button>
             </form>
         }
         </div>
