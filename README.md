@@ -38,3 +38,7 @@ Holds a value
 Notifies Angular automatically when the value changes
 
 Updates the UI without manual subscription
+
+
+npm i ngx-toastr
+for toaster information
