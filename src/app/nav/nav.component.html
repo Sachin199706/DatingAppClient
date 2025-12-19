@@ -4,7 +4,7 @@
             <a class="navbar-brand" href="#">Dating app</a>
 
 
-            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0" *ngIf="accountService.currentUser()">
                 <li class="nav-item">
                     <a class="nav-link">Matches</a>
                 </li>
@@ -17,13 +17,25 @@
                 </li>
 
             </ul>
+
+           @if(accountService.currentUser()){
+            <div class="dropdown" dropdown>
+                <a class="dropdown-toggle text-light text-decoration-none" dropdownToggle>Welcome User</a>
+                <div class="dropdown-menu" *dropdownMenu>
+                    <a class="dropdown-item">Edit Profile</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" (click)="logout()">Logout</a>
+                </div>
+            </div>
+           }
+            @if(!accountService.currentUser()){
             <form class="d-flex" #loginForm="ngForm" (ngSubmit)="login()">
                 <input class="form-control me-2" [(ngModel)]="creds.UserName" name="UserName"  placeholder="UserName">
                 <input class="form-control me-2" [(ngModel)]="creds.PassWord" name="PassWord"  placeholder="PassWord" type="password">
 
                 <button class="btn btn-outline-success" type="submit">Loging</button>
             </form>
-
+        }
         </div>
     </nav>
 </header>
