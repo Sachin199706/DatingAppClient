@@ -42,3 +42,10 @@ Updates the UI without manual subscription
 
 npm i ngx-toastr
 for toaster information
+
+npm i bootstap
+ng g interceptor 
+
+.flat()
+
+.flat() converts multiple arrays into one array.
