@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, Signal, signal } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { IUser } from '../app/Models/User';
+import { environment } from '../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
   currentUser = signal<IUser | null>(null);
-  BaseUrl = 'https://localhost:5001/api/account';
+  BaseUrl = environment.apiUrl;
 
   constructor(private httpclient: HttpClient) { }
 
@@ -17,7 +18,7 @@ export class AccountService {
 
     // Send POST request to login API
     return this.httpclient
-      .post<IUser>(`${this.BaseUrl}/login`, data)
+      .post<IUser>(`${this.BaseUrl}account/login`, data)
       .pipe(
 
         // map() is used to perform side effects and return user
@@ -37,7 +38,7 @@ export class AccountService {
 
     // Send POST request to register API
     return this.httpclient
-      .post<IUser>(`${this.BaseUrl}/register`, data)
+      .post<IUser>(`${this.BaseUrl}account/register`, data)
       .pipe(
 
         // map() is used to perform side effects and return user
@@ -76,5 +77,9 @@ export class AccountService {
     // Update currentUser signal
     this.currentUser.set(user);
 
+  }
+  public getToken(): string | null {
+    const user = this.currentUser();
+    return user ? user.token : null;
   }
 }

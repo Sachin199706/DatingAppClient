@@ -49,3 +49,38 @@ ng g interceptor
 .flat()
 
 .flat() converts multiple arrays into one array.
+
+
+track member.id – Why it is used
+
+track tells Angular how to uniquely identify each item in the list.
+
+Here, Angular uses member.id as a unique key.
+
+This helps Angular optimize rendering.
+
+Why it matters
+
+Without track:
+
+Angular may destroy and recreate DOM elements unnecessarily.
+
+With track member.id:
+
+Angular updates only the changed item
+
+Better performance, especially for large lists
+
+Example
+
+If one member changes:
+
+❌ Without track → whole list may re-render
+
+✅ With track member.id → only that member updates
+
+let i = index – Why it is used
+
+index gives the position of the current item in the loop.
+
+i is just a variable name you choose.
