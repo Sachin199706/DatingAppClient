@@ -51,7 +51,8 @@
             </tab>
             <tab heading="Photos" #photosTab="tab">
                 @if(photosTab.active){
-                <gallery [items]="images" class="gallery"></gallery>
+                <gallery [items]="images"  class="gallery"></gallery>
+                <!-- [itemAutosize]="true" -->
                 }
             </tab>
              <tab heading="Messages">

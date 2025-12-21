@@ -24,6 +24,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "assets"
               }
             ],
             "styles": [
@@ -32,7 +37,6 @@
               "node_modules/bootswatch/dist/United/bootstrap.min.css",
               "node_modules/ngx-spinner/animations/ball-beat.css",
               "node_modules/ngx-toastr/toastr.css",
-              
               "src/styles.css"
             ],
             "scripts": []
