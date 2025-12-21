@@ -1,23 +1,43 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../environments/environment.development';
-import { Observable } from 'rxjs';
-import { Member } from '../app/Models/member';
+import { Observable, of, tap } from 'rxjs';
+import { Member, MemberUpdate } from '../app/Models/member';
+import { ToastrService } from 'ngx-toastr';
+import { AccountService } from './account.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MembersService {
   _httpclient: HttpClient = inject(HttpClient);
+  _toastrService: ToastrService = inject(ToastrService);
   BaseUrl: string = environment.apiUrl;
+  members=signal<Member[]>([]);
 
   //old code
   //constructor(private httpclient: HttpClient) { }
 
-  getMembers():Observable<Member[]> {
-    return this._httpclient.get<Member[]>(this.BaseUrl + 'users');
+  getMembers():void {
+     this._httpclient.get<Member[]>(this.BaseUrl + 'users').subscribe({
+      next: (res: Member[]) => {
+              this.members.set(res);
+              this._toastrService.success("Members loaded successfully", "Success");
+        }
+    });
   }
   getMember(username:string):Observable<Member> {
+    let member=this.members().find(m=>m.username===username);
+    if(member) return of(member);
     return this._httpclient.get<Member>(`${this.BaseUrl}users/${username}`);
+  }
+
+  UPdateMember(member: Member):Observable<void> {
+    return this._httpclient.put<void>(`${this.BaseUrl}users`, member).pipe(
+      tap(() => {
+        this.members.update(members=>members.map(m=>m.username===member.username ?member : m));
+      }
+    )
+    );
   }
 }

@@ -84,3 +84,15 @@ let i = index – Why it is used
 index gives the position of the current item in the loop.
 
 i is just a variable name you choose.
+
+| `@ViewChild`                 | `@Input`              |
+| ---------------------------- | --------------------- |
+| Parent → Child (view access) | Parent → Child (data) |
+| Reads template               | Receives data         |
+| Used in TS                   | Used in component API |
+
+
+npm install ngx-spinner@18
+for loader
+
+tap() is used to perform side effects in an observable without changing the data.
