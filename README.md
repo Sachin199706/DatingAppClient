@@ -96,3 +96,11 @@ npm install ngx-spinner@18
 for loader
 
 tap() is used to perform side effects in an observable without changing the data.
+
+✅ What withCredentials = false does
+
+Stops sending cookies and auth credentials
+
+Avoids CORS issues
+
+Allows file upload to succeed
