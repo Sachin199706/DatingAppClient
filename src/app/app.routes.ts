@@ -7,11 +7,14 @@ import { MessagesComponent } from './messages/messages.component';
 import { TestErrorComponent } from './errors/test-error/test-error.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
+import { preventUnsavedChangesGuard } from './_guard/prevent-unsaved-changes.guard';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'members', component: MemberListComponent },
     { path: 'members/:username', component: MemberDetailComponent },
+     { path: 'member/edit', component: MemberEditComponent,canDeactivate:[preventUnsavedChangesGuard] },
     { path: 'lists', component: ListsComponent },
     { path: 'message', component: MessagesComponent },
     { path: 'errors', component: TestErrorComponent },
