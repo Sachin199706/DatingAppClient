@@ -1,32 +1,55 @@
-<form #registerFrom="ngForm" (ngSubmit)="register()" class="form">
-<h2 class="text-center text-primary">Sing UP</h2>
-<hr />
-  <div class="mb-3 form-floating">
-    <input
-      type="text"
-      class="form-control"
-      placeholder="Username"
-      name="username"
-     [(ngModel)]="model.username"
-     id="username"
-    />
-    <label for="username">Username</label>
-  </div>
-  <div class="mb-3 form-floating">
-    <input
-      type="password"
-      class="form-control"
-      placeholder="password"
-      name="password"
-     [(ngModel)]="model.password"
+<form [formGroup]="registerForm" (ngSubmit)="register()" class="form">
+  <h2 class="text-center text-primary">Sing UP</h2>
+  <hr />
+  <app-text-input [formControl]="$any(registerForm.controls['username'])" [lable]="'username'"></app-text-input>
 
-    />
-    <label for="password">Password</label>
+  <app-text-input [formControl]="$any(registerForm.controls['email'])" [lable]="'email'"
+    [type]="'email'"></app-text-input>
+
+
+  <div class="mb-3">
+    <label style="margin-right: 10px;">I am a:</label>
+    <label class="form-check-label">
+      <input type="radio" class="form-check-inline" value="male" formControlName="gender" />Male
+    </label>
+    <label class="form-check-label">
+      <input type="radio" class="form-check-inline" value="female" formControlName="gender" />feMale
+    </label>
   </div>
-      <div class="from-group text-center">
-        <button type="submit" class="btn btn-success me-2">Register</button>
-        <button type="button" class="btn btn-default me-2" (click)="Cancel()">Cancel</button>
+
+  <app-text-input [formControl]="$any(registerForm.controls['knownAs'])" [lable]="'known As'"></app-text-input>
+
+  <app-date-picker [formControl]="$any(registerForm.controls['dateOfBirth'])" [lable]="'date Of Birth'"
+    [maxData]="maxDate"></app-date-picker>
+
+  <app-text-input [formControl]="$any(registerForm.controls['city'])" [lable]="'city'"></app-text-input>
+
+  <app-text-input [formControl]="$any(registerForm.controls['country'])" [lable]="'country'"></app-text-input>
+
+  <app-text-input [formControl]="$any(registerForm.controls['password'])" [lable]="'password'"
+    [type]="'password'"></app-text-input>
+
+  <app-text-input [formControl]="$any(registerForm.controls['confirmPassword'])" [lable]="'confirm password'"
+    [type]="'password'"></app-text-input>
+
+    @if(validationErrors){
+      <div class="alert alert-danger text-start">
+          <ul>
+            @for(err of validationErrors;track $index){
+              <li>{{err}}</li>
+            }
+            </ul>
       </div>
+    }
+
+
+  <div class="from-group text-center">
+    <button type="submit" [disabled]="!registerForm.valid" class="btn btn-success me-2">Register</button>
+    <button type="button" class="btn btn-default me-2" (click)="Cancel()">Cancel</button>
+  </div>
 
 
 </form>
+
+<!-- <p> {{registerForm.value | json}}</p>
+<p>{{registerForm.status |json}}</p> -->
