@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { MembersService } from '../../../_Services/members.service';
+import { MembersService } from '../../_Services/members.service';
 import { Member } from '../../Models/member';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';

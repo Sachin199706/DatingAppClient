@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { environment } from '../environments/environment.development';
+import { environment } from '../../environments/environment.development';
 import { Observable, of, tap } from 'rxjs';
-import { Member, MemberUpdate, Photo } from '../app/Models/member';
+import { Member, MemberUpdate, Photo } from '../Models/member';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from './account.service';
 
