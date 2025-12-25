@@ -104,3 +104,6 @@ Stops sending cookies and auth credentials
 Avoids CORS issues
 
 Allows file upload to succeed
+
+@Self() means: “Inject this dependency only from here, not from parent.”
+If the dependency is not found on the same element, Angular throws an error.
