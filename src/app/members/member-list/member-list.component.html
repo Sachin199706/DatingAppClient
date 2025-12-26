@@ -1,9 +1,66 @@
 <div class="row">
-    
-        @for(member of _memberService.members();track member.id){
-            <div class="col-2">
-                <app-member-card [member]="member"></app-member-card>
+
+    <div class="text-center mt-3">
+        <h2>Your Matches-{{_memberService.paginatedResult()?.Pagination?.totalItems}}</h2>
+    </div>
+
+    <div class="container mt-3">
+        <form #form="ngForm" class="d-flex mb-3" (ngSubmit)="loadmembers()">
+            <div class="d-flex mx-2">
+                <label class="col-form-label">Age From:</label>
+                <input type="number" class="form-control ms-1" style="width: 70px;" name="minAge"
+                    [(ngModel)]="this._memberService.getUserParams().minAge" />
             </div>
-        }
-    
+            <div class="d-flex mx-2">
+                <label class="col-form-label">Age to:</label>
+                <input type="number" class="form-control ms-1" style="width: 70px;" name="maxAge"
+                    [(ngModel)]="this._memberService.getUserParams().maxAge" />
+            </div>
+            <div class="d-flex mx-2">
+                <label class="col-form-label">show</label>
+                <select name="gender" style="width: 130px;" [(ngModel)]="this._memberService.getUserParams().gender">
+                    @for(gender of genderList; track gender.value){
+                    <option [value]="gender.value">
+                        {{gender.display}}
+                    </option>
+                    }
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary ms-1">Apply filters</button>
+            <button type="button" class="btn btn-info ms-1" (click)="resetFilters()">Reset filters</button>
+            <div class="col">
+                <div class="btn-group float-end">
+                    <button type="button" class="btn btn-primary" name="OrderBy" (click)="loadmembers()"
+                        btnRadio="lastActive" [(ngModel)]="this._memberService.getUserParams().OrderBy">
+                        lastActive
+                    </button>
+
+
+                    <button type="button" class="btn btn-primary" name="OrderBy" (click)="loadmembers()"
+                        btnRadio="created" [(ngModel)]="this._memberService.getUserParams().OrderBy">
+                        created
+                    </button>
+                </div>
+
+            </div>
+        </form>
+
+    </div>
+
+
+    @for(member of _memberService.paginatedResult()?.items;track member.id){
+    <div class="col-2">
+        <app-member-card [member]="member"></app-member-card>
+    </div>
+    }
+
+</div>
+
+<div class="d-flex justify-content-center">
+    <pagination [boundaryLinks]="true" [totalItems]="_memberService.paginatedResult()?.Pagination?.totalItems !"
+        [itemsPerPage]="_memberService.paginatedResult()?.Pagination?.itemPerPage!" [(ngModel)]="_memberService.paginatedResult()?.Pagination!.currentPage" (pageChanged)="pageChanged($event)"
+        [maxSize]="5" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+
+    </pagination>
 </div>
