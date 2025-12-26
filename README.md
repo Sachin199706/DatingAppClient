@@ -107,3 +107,37 @@ Allows file upload to succeed
 
 @Self() means: “Inject this dependency only from here, not from parent.”
 If the dependency is not found on the same element, Angular throws an error.
+
+
+
+With observe: 'response'
+this.http.get<Member[]>(url, { observe: 'response' })
+
+Angular returns a full HTTP response object:
+HttpResponse<Member[]>
+{
+  body: Member[],
+  headers: HttpHeaders,
+  status: 200,
+  statusText: "OK",
+  url: "..."
+}
+
+
+[...array] uses the spread operator (...) in TypeScript / JavaScript.
+
+It is mainly used to copy, merge, or expand arrays without changing the original array.
+const arr1 = [1, 2];
+const arr2 = [3, 4];
+
+const merged = [...arr1, ...arr2];
+
+console.log(merged); // [1, 2, 3, 4]
+function sum(a: number, b: number, c: number) {
+  return a + b + c;
+}
+
+const values = [1, 2, 3];
+
+sum(...values); // 6
+reduce() is used to convert an array into a single value by applying a function to each element and accumulating the result.
