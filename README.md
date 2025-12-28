@@ -141,3 +141,7 @@ const values = [1, 2, 3];
 
 sum(...values); // 6
 reduce() is used to convert an array into a single value by applying a function to each element and accumulating the result.
+
+computed(...)
+
+Angular re-computes automatically when data changes

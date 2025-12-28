@@ -3,6 +3,7 @@ import { Injectable, Signal, signal } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { IUser } from '../Models/User';
 import { environment } from '../../environments/environment.development';
+import { LikesService } from './likes.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class AccountService {
   currentUser = signal<IUser | null>(null);
   BaseUrl = environment.apiUrl;
 
-  constructor(private httpclient: HttpClient) { }
+  constructor(private httpclient: HttpClient,private _likesServices:LikesService) { }
 
   // Login API call
   public login(data: any): Observable<IUser> {
@@ -76,6 +77,8 @@ export class AccountService {
 
     // Update currentUser signal
     this.currentUser.set(user);
+
+    this._likesServices.getLikeIds();
 
   }
   public getToken(): string | null {

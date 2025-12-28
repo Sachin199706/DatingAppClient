@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AccountService } from './account.service';
 import { PaginatedResult } from '../Models/Pagnation';
 import { userParams } from '../Models/userParams';
+import { PaginationHelper } from './PaginationHelper';
 
 @Injectable({
   providedIn: 'root'
@@ -28,41 +29,19 @@ export class MembersService {
   getMembers(userParams: userParams): void {
 
     const response = this.memberCache.get(Object.values(userParams).join('-'));
-    if(response) return this.setPaginatiedResponse(response);
-    let params = this.setPaginationHeader(userParams);
+    if(response) return PaginationHelper.setPaginatiedResponse(response,this.paginatedResult);
+    let params =PaginationHelper.setPaginationHeader(userParams,true);
 
     this._httpclient.get<Member[]>(this.BaseUrl + 'users', { observe: 'response', params }).subscribe({
       next: (res: HttpResponse<Member[]>) => {
-       this.setPaginatiedResponse(res);
+       PaginationHelper.setPaginatiedResponse(res,this.paginatedResult);
        this.memberCache.set(Object.values(userParams).join('-'),res);
         this._toastrService.success("Members loaded successfully", "Success");
       }
     });
   }
 
-private setPaginatiedResponse(res:HttpResponse<Member[]>){
- this.paginatedResult.set({
-          items: res.body as Member[],
-          Pagination: JSON.parse(res.headers.get('Pagination')!)
-        })
-}
 
-  private setPaginationHeader(userParams: userParams): HttpParams {
-    let params = new HttpParams();
-
-    params = params.appendAll({
-      'pageNumber': userParams.pageNumber,
-      'pageSize': userParams.pageSize,
-      'minAge': userParams.minAge,
-      'maxAge': userParams.maxAge,
-      'gender': userParams.gender,
-      'orderBy': userParams.OrderBy
-
-    });
-    return params;
-
-
-  }
 
 
   getMember(username: string): Observable<Member> {

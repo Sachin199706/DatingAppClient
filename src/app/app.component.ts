@@ -37,7 +37,7 @@ setCurrentUser() {
   const user = JSON.parse(userString);
 
   // Update currentUser signal in account service
-  this.accountService.currentUser.set(user);
+  this.accountService.setCurrentUser(user);
 }
 
 }
