@@ -1,1 +1,86 @@
-<p>messages works!</p>
+<div class="container mt-3">
+
+    <div class="d-flex">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary" btnRadio="Unread" [(ngModel)]="container"
+                (click)="loadMessages()">Unread</button>
+            <button type="button" class="btn btn-primary" btnRadio="Inbox" [(ngModel)]="container"
+                (click)="loadMessages()">Inbox</button>
+            <button type="button" class="btn btn-primary" btnRadio="Outbox" [(ngModel)]="container"
+                (click)="loadMessages()">Outbox</button>
+        </div>
+
+    </div>
+
+</div>
+
+@if(!_messageServices.paginatedResult()?.items || _messageServices.paginatedResult()?.items?.length==0){
+<h3>No Message</h3>
+}
+@else {
+<table class="table table-hover mt-3" style="cursor: pointer;">
+    <thead>
+        <tr>
+            <th style="width: 40px;">Message</th>
+            <th style="width: 20px;">From / To</th>
+            <th style="width: 20px;">Sent / Received</th>
+            <th style="width:  20px;"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for(message of _messageServices.paginatedResult()?.items;track message.id){
+        <tr (contextmenu)="openMenu($event, message)">
+            <td>
+                {{message.content}}
+
+            </td>
+            <td>
+                <div>
+                    <img [src]="isOutPut ? (message.recipientPhotoUrl || '/assets/user.png'): (message.senderPhotoUrl ||'/assets/user.png' ) "
+                        alt="image of user" class="rounded-circle me-2" />
+                    <strong style="margin: 5px;">{{isOutPut ? message.recipientUsername
+                        :message.senderUsername}}</strong>
+                </div>
+            </td>
+            <td>{{message.messageSent | timeago}}</td>
+            <td (click)="$event.stopPropagation()"><button class="btn btn-danger" (click)="deleteMessage(message.id)">Delete</button></td>
+        </tr>
+        }
+    </tbody>
+</table>
+}
+ 
+<app-context-menu
+  [x]="menuY"
+  [y]="menuX"
+  [visible]="showMenu"
+  (viewUser)="navigateToUser()">
+</app-context-menu>
+
+<!-- 🔹 HIDDEN MATERIAL MENU TRIGGER (REQUIRED)
+<button #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu" style="display:none">
+</button>
+
+🔹 MATERIAL CONTEXT MENU
+<mat-menu #menu="matMenu" xPosition="after" yPosition="below">
+    <button mat-menu-item (click)="navigateToUser()">
+        <mat-icon>person</mat-icon>
+        <span>View User Details</span>
+    </button>
+
+    <button mat-menu-item (click)="deleteMessage()">
+        <mat-icon>delete</mat-icon>
+        <span>Delete</span>
+    </button>
+</mat-menu> -->
+
+@if(_messageServices.paginatedResult()?.Pagination && _messageServices.paginatedResult()?.Pagination?.totalItems!>0){
+<div class="d-flex justify-content-center">
+    <pagination [boundaryLinks]="true" [totalItems]="_messageServices.paginatedResult()?.Pagination?.totalItems !"
+        [itemsPerPage]="_messageServices.paginatedResult()?.Pagination?.itemPerPage!"
+        [(ngModel)]="_messageServices.paginatedResult()?.Pagination!.currentPage" (pageChanged)="pageChanged($event)"
+        [maxSize]="5" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+
+    </pagination>
+</div>
+}

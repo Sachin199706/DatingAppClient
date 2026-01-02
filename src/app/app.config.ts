@@ -9,6 +9,7 @@ import { jwtInterceptor } from './_interceptor/jwt.interceptor';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { loadingInterceptor } from './_interceptor/loading.interceptor';
 import { TimeagoModule } from 'ngx-timeago';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
@@ -16,6 +17,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([errorInterceptor,jwtInterceptor,loadingInterceptor])),
     provideAnimations(),
      provideToastr({ positionClass: 'toast-bottom-right' }),
-     importProvidersFrom(NgxSpinnerModule,TimeagoModule.forRoot())
+     importProvidersFrom(NgxSpinnerModule,TimeagoModule.forRoot()), provideAnimationsAsync()
   ]
 };

@@ -145,3 +145,13 @@ reduce() is used to convert an array into a single value by applying a function 
 computed(...)
 
 Angular re-computes automatically when data changes
+
+What is a Resolver in Angular?
+
+An Angular Resolver is used to fetch data before a route is activated.
+That means the component loads only after the required data is ready.
+
+| Option          | When ViewChild is available   |
+| --------------- | ----------------------------- |
+| `static: true`  | **Before** `ngOnInit()`       |
+| `static: false` | **After** `ngAfterViewInit()` |
