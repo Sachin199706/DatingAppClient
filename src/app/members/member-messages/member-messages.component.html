@@ -1,0 +1,47 @@
+<div class="card">
+    <div class="card-body">
+        @if(messages().length==0){
+        <p>No Message yet</p>
+        }
+        @else {
+        <ul class="chat">
+            @for(mess of messages();track mess.id ){
+            <li>
+                <div>
+                    <span class="chat-img float-end">
+                        <img class="rounded-circle" [src]="mess.senderPhotoUrl || '/assets/user.png'"
+                            alt="Image of message Sender" />
+                    </span>
+                    <div class="chat-body">
+                        <div class="header">
+                            <small class="text-muted">
+                                <span class="fa fa-clock-o">{{mess.messageSent | timeago}} </span>
+                                @if(!mess.dateRead && mess.senderUsername!==username()){
+                                <span class="text-danger">(Unread)</span>
+                                }
+                                @if(mess.dateRead && mess.senderUsername !==username()){
+                                <span class="text-success">(read {{mess.dateRead | timeago}})</span>
+                                }
+
+                            </small>
+                        </div>
+                        <p>{{mess.content}}</p>
+                    </div>
+                </div>
+            </li>
+            }
+        </ul>
+        }
+    </div>
+    <div class="card-footer">
+        <form #messageForm="ngForm" (ngSubmit)="SendMessage()">
+            <div class="input-group">
+                <input name="messageContent" required class="form-control input-sm" placeholder="send a private message"
+                    [(ngModel)]="messageContent" />
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary" [disabled]="!messageForm.valid">Send</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
